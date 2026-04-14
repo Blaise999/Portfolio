@@ -11,7 +11,6 @@ import Footer from "@/components/Footer";
 import GrainOverlay from "@/components/ui/GrainOverlay";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
 
-
 export default function Home() {
   return (
     <>
