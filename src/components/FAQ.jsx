@@ -111,7 +111,7 @@ export default function FAQ() {
             </Reveal>
             <Reveal delay={0.15}>
               <a
-                href="https://wa.me/2348000000000"
+                href="https://wa.me/2349027475360"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-[#25D366]/10 border border-[#25D366]/20 text-[#25D366] text-[13px] font-semibold hover:bg-[#25D366]/20 transition-all duration-300"
