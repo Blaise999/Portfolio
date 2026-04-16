@@ -1,13 +1,12 @@
 export const socials = [
-  { name: "Instagram", handle: "@craxxout", url: "https://instagram.com/craxxout", platform: "ig" },
-  { name: "X", handle: "@blaise-tech", url: "https://x.com/blaise-tech", platform: "x" },
-  { name: "LinkedIn", handle: "Blaisexx", url: "https://linkedin.com/in/Blaisexx", platform: "linkedin" },
-  { name: "GitHub", handle: "Blaisexx", url: "https://github.com/Blaisexx", platform: "github" },
-  { name: "Upwork", handle: "Blaisexx", url: "https://upwork.com/freelancers/Blaisexx", platform: "upwork" },
-  { name: "TikTok", handle: "@Blaisexx", url: "https://tiktok.com/@Blaisexx", platform: "tiktok" },
+  { name: "Instagram", handle: "@b_techhhh", url: "https://instagram.com/b_techhh", platform: "ig" },
+  { name: "X", handle: "@blaisetechh", url: "https://x.com/blaisetechh", platform: "x" },
+  { name: "LinkedIn", handle: "Blaisetech", url: "https://www.linkedin.com/in/blaise-tech-582b9a331?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app", platform: "linkedin" },
+  { name: "Upwork", handle: "Blaisexx", url: "https://www.upwork.com/freelancers/~011837882186f71a1e?companyReference=2044264649572464874&mp_source=share", platform: "upwork" },
+  { name: "Threads", handle: "@b_techhhh", url:"https://www.threads.com/@b_techhhh?igshid=NTc4MTIwNjQ2YQ==", platform: "threads" },
 ];
 
-export const whatsappNumber = "2348000000000"; // Replace with your actual WhatsApp number
+export const whatsappNumber = "2349027475360"; // Replace with your actual WhatsApp number
 
 export const techStack = [
   "Next.js", "React", "TypeScript", "Solidity", "Tailwind CSS",
