@@ -8,7 +8,7 @@ import Reveal from "./ui/Reveal";
 const FAQS = [
   {
     q: "How long does it take to build a project?",
-    a: "It depends on complexity. A standard website or landing page takes 1–3 weeks. More complex platforms — e-commerce stores, fintech dashboards, trading terminals — typically take 4–10 weeks. Smart contract development with audit-ready code adds 2–4 weeks. We'll give you a realistic timeline before we start.",
+    a: "It depends on complexity. A standard website or landing page takes 4 days to a week. More complex platforms — e-commerce stores, fintech dashboards, trading terminals — typically take 1-2 weeks. Smart contract development with audit-ready code adds 2–4 weeks. We'll give you a realistic timeline before we start.",
   },
   {
     q: "What's your pricing like?",
