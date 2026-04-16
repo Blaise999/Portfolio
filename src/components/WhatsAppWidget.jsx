@@ -6,7 +6,7 @@ import { X } from "lucide-react";
 
 export default function WhatsAppWidget() {
   const [open, setOpen] = useState(false);
-  const number = "2348000000000"; // Replace with your actual number
+  const number = "2349027475360"; // Replace with your actual number
 
   return (
     <div className="fixed bottom-6 right-6 z-[100]">
