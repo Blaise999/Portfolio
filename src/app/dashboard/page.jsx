@@ -15,24 +15,15 @@ export default function Dashboard() {
 
   useEffect(() => {
     fetchVisits();
-    const interval = setInterval(fetchVisits, 8000); // auto-refresh every 8 seconds
+    const interval = setInterval(fetchVisits, 8000);
     return () => clearInterval(interval);
   }, []);
 
   const total = visits.length;
-  const latest = visits[0]
-    ? new Date(visits[0].timestamp).toLocaleTimeString('en-US', {
-        hour: 'numeric',
-        minute: '2-digit',
-        hour12: true,
-      })
-    : '—';
 
-  const countries = new Set(visits.map((v) => v.country).filter(Boolean)).size;
-
-  const getFlag = (country) => {
-    if (!country) return '🌍';
-    const codePoints = country
+  const getFlag = (countryCode) => {
+    if (!countryCode || countryCode === 'XX') return '🌍';
+    const codePoints = countryCode
       .toUpperCase()
       .split('')
       .map((char) => 127397 + char.charCodeAt(0));
@@ -45,7 +36,7 @@ export default function Dashboard() {
         <div className="flex justify-between items-center mb-10">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 bg-emerald-500 rounded-2xl flex items-center justify-center text-2xl">📍</div>
-            <h1 className="text-4xl font-semibold tracking-tight">Visitor Tracker</h1>
+            <h1 className="text-4xl font-semibold tracking-tight">All Visitors</h1>
           </div>
           <button
             onClick={fetchVisits}
@@ -64,22 +55,28 @@ export default function Dashboard() {
           </div>
           <div className="bg-zinc-900 rounded-3xl p-6">
             <p className="text-zinc-400 text-sm">Latest Visit</p>
-            <p className="text-5xl font-semibold mt-2">{latest}</p>
+            <p className="text-5xl font-semibold mt-2">
+              {visits[0]
+                ? new Date(visits[0].timestamp).toLocaleTimeString('en-US', {
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    hour12: true,
+                  })
+                : '—'}
+            </p>
           </div>
           <div className="bg-zinc-900 rounded-3xl p-6">
             <p className="text-zinc-400 text-sm">Unique Countries</p>
-            <p className="text-5xl font-semibold mt-2">{countries}</p>
+            <p className="text-5xl font-semibold mt-2">
+              {new Set(visits.map((v) => v.country).filter(Boolean)).size}
+            </p>
           </div>
         </div>
 
-        {/* Live Table */}
+        {/* Visitor History Table */}
         <div className="bg-zinc-900 rounded-3xl overflow-hidden">
-          <div className="px-8 py-6 border-b border-zinc-800 flex justify-between items-center">
-            <h2 className="text-xl font-semibold">Live Visitor Log</h2>
-            <div className="flex items-center gap-2 text-emerald-400">
-              <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
-              LIVE
-            </div>
+          <div className="px-8 py-6 border-b border-zinc-800">
+            <h2 className="text-xl font-semibold">Visitor History</h2>
           </div>
 
           <table className="w-full">
@@ -95,6 +92,7 @@ export default function Dashboard() {
                 const time = new Date(visit.timestamp).toLocaleString('en-US', {
                   month: 'short',
                   day: 'numeric',
+                  year: 'numeric',
                   hour: 'numeric',
                   minute: '2-digit',
                   hour12: true,
@@ -102,10 +100,10 @@ export default function Dashboard() {
                 return (
                   <tr key={i} className="hover:bg-zinc-800/50 transition-colors">
                     <td className="px-8 py-5 font-mono text-sm">{visit.ip}</td>
-                    <td className="px-8 py-5 text-sm">{time}</td>
+                    <td className="px-8 py-5 text-sm font-medium">{time}</td>
                     <td className="px-8 py-5">
                       <div className="flex items-center gap-3">
-                        <span className="text-2xl">{getFlag(visit.country)}</span>
+                        <span className="text-2xl">{getFlag(visit.countryCode)}</span>
                         <span>
                           {visit.city}, {visit.country}
                         </span>
@@ -126,7 +124,7 @@ export default function Dashboard() {
         </div>
 
         <p className="text-center text-zinc-500 text-xs mt-8">
-          Built into your Next.js app • Data saved in visits.json
+          Full visitor history • Data saved in visits.json
         </p>
       </div>
     </div>
