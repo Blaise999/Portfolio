@@ -1,15 +1,15 @@
-import Navbar from "@/components/ui/Navbar";
-import Hero from "@/components/ui/Hero";
-import Services from "@/components/ui/Services";
+import Navbar from "@/components/Navbar";
+import Hero from "@/components/Hero";
+import Services from "@/components/Services";
 import TechLogos from "@/components/ui/TechLogos";
-import About from "@/components/ui/About";
-import Projects from "@/components/ui/Projects";
-import Philosophy from "@/components/ui/Philosophy";
-import FAQ from "@/components/ui/FAQ";
-import Contact from "@/components/ui/Contact";
-import Footer from "@/components/ui/Footer";
+import About from "@/components/About";
+import Projects from "@/components/Projects";
+import Philosophy from "@/components/Philosophy";
+import FAQ from "@/components/FAQ";
+import Contact from "@/components/Contact";
+import Footer from "@/components/Footer";
 import GrainOverlay from "@/components/ui/GrainOverlay";
-import WhatsAppWidget from "@/components/ui/WhatsAppWidget";
+import WhatsAppWidget from "@/components/WhatsAppWidget";
 
 export default function Home() {
   return (
