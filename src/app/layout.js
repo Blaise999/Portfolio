@@ -1,3 +1,5 @@
+// ✅ FIXED: app/layout.js (plain JavaScript — no TypeScript)
+
 import "./globals.css";
 import { Syne, Manrope, JetBrains_Mono } from "next/font/google";
 
@@ -14,7 +16,21 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${syne.variable} ${manrope.variable} ${jetbrains.variable}`}>
-      <body className="font-body">{children}</body>
+      <body className="font-body">
+        {children}
+
+        {/* VISITOR TRACKER — runs automatically on every page */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              fetch('/api/track', { 
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+              }).catch(() => {});
+            `,
+          }}
+        />
+      </body>
     </html>
   );
 }

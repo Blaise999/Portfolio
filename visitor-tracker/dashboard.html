@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor Tracker • Built in VS Code</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+        body { font-family: 'Inter', system_ui, sans-serif; }
+    </style>
+</head>
+<body class="bg-zinc-950 text-white">
+    <div class="max-w-6xl mx-auto p-8">
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-10">
+            <div class="flex items-center gap-x-3">
+                <div class="w-9 h-9 bg-emerald-500 rounded-2xl flex items-center justify-center text-xl">📍</div>
+                <h1 class="text-4xl font-semibold tracking-tight">Visitor Tracker</h1>
+            </div>
+            <div class="flex items-center gap-x-6 text-sm">
+                <div onclick="refreshDashboard()" 
+                     class="flex items-center gap-x-2 px-5 py-2.5 bg-zinc-900 hover:bg-zinc-800 rounded-3xl cursor-pointer transition-colors">
+                    <span class="text-emerald-400">↻</span>
+                    <span class="font-medium">Refresh</span>
+                </div>
+                <a href="https://github.com" target="_blank"
+                   class="text-zinc-400 hover:text-white flex items-center gap-x-1 text-sm">
+                    <span>View code on GitHub</span>
+                    <span class="text-lg leading-none">→</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-3 gap-6 mb-10">
+            <div class="bg-zinc-900 rounded-3xl p-6">
+                <div class="text-zinc-400 text-sm mb-1">Total Visitors</div>
+                <div id="total-count" class="text-5xl font-semibold text-white">0</div>
+            </div>
+            <div class="bg-zinc-900 rounded-3xl p-6">
+                <div class="text-zinc-400 text-sm mb-1">Latest Visit</div>
+                <div id="latest-time" class="text-5xl font-semibold text-white">-</div>
+            </div>
+            <div class="bg-zinc-900 rounded-3xl p-6">
+                <div class="text-zinc-400 text-sm mb-1">Unique Countries</div>
+                <div id="unique-countries" class="text-5xl font-semibold text-white">0</div>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="bg-zinc-900 rounded-3xl overflow-hidden">
+            <div class="px-8 py-5 border-b border-zinc-800 flex items-center justify-between">
+                <h2 class="font-semibold text-xl">Live Visitor Log</h2>
+                <div class="text-emerald-400 text-sm flex items-center gap-x-1">
+                    <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                    LIVE
+                </div>
+            </div>
+            <table class="w-full" id="visits-table">
+                <thead>
+                    <tr class="text-left text-zinc-400 text-sm border-b border-zinc-800">
+                        <th class="px-8 py-5 font-medium">IP ADDRESS</th>
+                        <th class="px-8 py-5 font-medium">TIME</th>
+                        <th class="px-8 py-5 font-medium">LOCATION</th>
+                    </tr>
+                </thead>
+                <tbody class="text-zinc-300 divide-y divide-zinc-800" id="table-body">
+                    <!-- Populated by JS -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mt-8 text-center text-zinc-500 text-xs flex items-center justify-center gap-x-2">
+            <span>Built in VS Code • Node.js + Express</span>
+            <span class="w-px h-3 bg-zinc-700"></span>
+            <span>Data stored locally in visits.json</span>
+        </div>
+    </div>
+
+    <script>
+        // Tailwind script already loaded via CDN
+        function refreshDashboard() {
+            fetch('/api/visits')
+                .then(r => r.json())
+                .then(visits => {
+                    renderTable(visits);
+                    updateStats(visits);
+                })
+                .catch(() => alert("Couldn't connect to tracker (is the server running?)"));
+        }
+
+        function updateStats(visits) {
+            document.getElementById('total-count').textContent = visits.length;
+            
+            if (visits.length > 0) {
+                const latest = new Date(visits[0].timestamp);
+                document.getElementById('latest-time').textContent = 
+                    latest.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+            }
+
+            const countries = new Set(visits.map(v => v.country).filter(Boolean));
+            document.getElementById('unique-countries').textContent = countries.size || 0;
+        }
+
+        function renderTable(visits) {
+            const tbody = document.getElementById('table-body');
+            tbody.innerHTML = '';
+
+            if (visits.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="3" class="px-8 py-12 text-center text-zinc-500">
+                            No visitors yet.<br>
+                            <span class="text-xs">Open the test page or embed the tracker script in your website.</span>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            visits.forEach(visit => {
+                const time = new Date(visit.timestamp);
+                const timeStr = time.toLocaleString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    hour12: true
+                });
+
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-zinc-800/50 transition-colors';
+                row.innerHTML = `
+                    <td class="px-8 py-5 font-mono text-sm">${visit.ip}</td>
+                    <td class="px-8 py-5 text-sm">${timeStr}</td>
+                    <td class="px-8 py-5">
+                        <div class="flex items-center gap-x-2">
+                            <span class="text-xl">${getFlagEmoji(visit.country)}</span>
+                            <span>${visit.city || '—'}, ${visit.country || 'Unknown'}</span>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function getFlagEmoji(country) {
+            if (!country) return '🌍';
+            const codePoints = country
+                .toUpperCase()
+                .split('')
+                .map(char => 127397 + char.charCodeAt());
+            return String.fromCodePoint(...codePoints);
+        }
+
+        // Auto-refresh every 8 seconds
+        setInterval(() => {
+            refreshDashboard();
+        }, 8000);
+
+        // Initial load
+        window.onload = () => {
+            refreshDashboard();
+        };
+    </script>
+</body>
+</html>
