@@ -1,5 +1,6 @@
 "use client";
 
+
 export function LogoMark({ size = 36, className = "" }) {
   return (
     <svg
