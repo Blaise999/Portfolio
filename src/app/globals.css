@@ -30,3 +30,61 @@ body {
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.1), transparent);
 }
+
+/* ─── MOTION ENHANCEMENTS (Framer-grade) ─── */
+
+/* Cursor-aware hover surface */
+.surface-glow {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.surface-glow::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: radial-gradient(
+    240px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(139, 92, 246, 0.12),
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: -1;
+  pointer-events: none;
+}
+.surface-glow:hover::before { opacity: 1; }
+
+/* Gradient text helper */
+.text-gradient {
+  background: linear-gradient(135deg, #fff 30%, #a78bfa 70%, #06b6d4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Reduced motion respect */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ─── MOBILE TOUCH OPTIMIZATIONS ─── */
+@media (max-width: 767px) {
+  button, a {
+    -webkit-tap-highlight-color: transparent;
+  }
+  input, textarea, select {
+    font-size: 16px;
+  }
+}
+
+/* Focus visible */
+*:focus-visible {
+  outline: 2px solid rgba(139, 92, 246, 0.6);
+  outline-offset: 2px;
+  border-radius: 6px;
+}

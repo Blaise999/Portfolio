@@ -7,14 +7,17 @@ import Projects from "@/components/Projects";
 import Philosophy from "@/components/Philosophy";
 import FAQ from "@/components/FAQ";
 import Contact from "@/components/Contact";
+import QuickQuoteForm from "@/components/QuickQuoteForm";
 import Footer from "@/components/Footer";
 import GrainOverlay from "@/components/ui/GrainOverlay";
+import ScrollProgress from "@/components/ui/ScrollProgress";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
 
 export default function Home() {
   return (
     <>
       <GrainOverlay />
+      <ScrollProgress />
       <Navbar />
       <WhatsAppWidget />
       <main>
@@ -43,6 +46,10 @@ export default function Home() {
         <div className="section-sep" />
 
         <FAQ />
+
+        <div className="section-sep" />
+
+        <QuickQuoteForm />
 
         <div className="section-sep" />
 
