@@ -151,9 +151,8 @@ export default function Hero() {
         <div className="flex items-center justify-between border-t border-white/[0.05] pt-6">
           <div className="flex items-center gap-6 sm:gap-12 overflow-x-auto scrollbar-hide">
             {[
-              { v: "8", l: "Shipped Products" },
+              { v: "8+", l: "Shipped Products" },
               { v: "2,400+", l: "Store Products" },
-              { v: "$50K+", l: "Assets Managed" },
               { v: "220+", l: "Shipping Lanes" },
             ].map(({ v, l }) => (
               <div key={l} className="shrink-0">
